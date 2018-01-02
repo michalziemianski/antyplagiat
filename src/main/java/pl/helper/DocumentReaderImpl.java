@@ -2,13 +2,11 @@ package pl.helper;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import pl.exception.DocumentProcessingException;
 import pl.model.Document;
 
 import java.io.File;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,37 +20,42 @@ public class DocumentReaderImpl implements DocumentReader {
 
     @Override
     public Document readDocument() throws DocumentProcessingException {
-        File documentFile = fileChooser.showOpenDialog(new Stage());
+        File documentFile = openDocumentFile();
 
         Document document = new Document();
-        switch(FilenameUtils.getExtension(documentFile.getPath())) {
-            case "txt":
-                document.setText(readTxtDocumentFromFile(documentFile));
-                break;
-            case "docx":
-                document.setText(readDocxDocumentFromFile(documentFile));
-                break;
-            default:
-                throw new DocumentProcessingException("extension not supported");
-        }
+        DocumentParser parser = getParserByExtension(FilenameUtils.getExtension(documentFile.getPath()));
 
+        document.setText(parser.parseDocument(documentFile));
         document.setWords(extractWordsFromDocuments(document.getText()));
+
+        document.getWords().stream().forEach(System.out::print);
+
         return document;
     }
 
-    private String readTxtDocumentFromFile(File documentFile) throws DocumentProcessingException {
-        String documentText;
-        try {
-            documentText = FileUtils.readFileToString(documentFile, Charset.forName("UTF8"));
-        } catch (Exception e) {
-            throw new DocumentProcessingException(e.getMessage(), e);
+    private File openDocumentFile() throws DocumentProcessingException {
+        File documentFile = fileChooser.showOpenDialog(new Stage());
+        if(documentFile == null) {
+            throw new DocumentProcessingException("Nie można otworzyć wybranego pliku.");
         }
 
-        return documentText;
+        return documentFile;
     }
 
-    private String readDocxDocumentFromFile(File documentFile) throws DocumentProcessingException {
-        throw new DocumentProcessingException("Docx format in not supported.");
+    private DocumentParser getParserByExtension(String extension) throws DocumentProcessingException {
+        DocumentParser parser;
+        switch(extension) {
+            case "txt":
+                parser = new TxtDocumentParser();
+                break;
+            case "docx":
+                parser = new DocxDocumentParser();
+                break;
+            default:
+                throw new DocumentProcessingException("Rozszerzenie nie jest wspierane.");
+        }
+
+        return parser;
     }
 
     private List<String> extractWordsFromDocuments(String documentText) throws DocumentProcessingException {
@@ -60,7 +63,7 @@ public class DocumentReaderImpl implements DocumentReader {
             return Arrays.asList(documentText.split("\\W+"));
         }
         else {
-            throw new DocumentProcessingException("Document text can't be null");
+            throw new DocumentProcessingException("Dokument nie może być pusty.");
         }
     }
 }
