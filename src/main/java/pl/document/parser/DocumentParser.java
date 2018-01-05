@@ -1,4 +1,4 @@
-package pl.helper;
+package pl.document.parser;
 
 import pl.exception.DocumentProcessingException;
 

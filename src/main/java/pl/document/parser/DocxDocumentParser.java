@@ -1,7 +1,8 @@
-package pl.helper;
+package pl.document.parser;
 
 import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import pl.document.parser.DocumentParser;
 import pl.exception.DocumentProcessingException;
 
 import java.io.File;

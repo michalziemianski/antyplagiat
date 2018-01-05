@@ -1,6 +1,7 @@
-package pl.helper;
+package pl.document.parser;
 
 import org.apache.commons.io.FileUtils;
+import pl.document.parser.DocumentParser;
 import pl.exception.DocumentProcessingException;
 
 import java.io.File;

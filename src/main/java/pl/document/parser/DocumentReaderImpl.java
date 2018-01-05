@@ -1,14 +1,15 @@
-package pl.helper;
+package pl.document.parser;
 
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FilenameUtils;
 import pl.exception.DocumentProcessingException;
-import pl.model.Document;
+import pl.document.Document;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DocumentReaderImpl implements DocumentReader {
     private FileChooser fileChooser = new FileChooser();
@@ -25,6 +26,7 @@ public class DocumentReaderImpl implements DocumentReader {
         Document document = new Document();
         DocumentParser parser = getParserByExtension(FilenameUtils.getExtension(documentFile.getPath()));
 
+        document.setName(documentFile.getName());
         document.setText(parser.parseDocument(documentFile));
         document.setWords(extractWordsFromDocuments(document.getText()));
 
@@ -60,7 +62,7 @@ public class DocumentReaderImpl implements DocumentReader {
 
     private List<String> extractWordsFromDocuments(String documentText) throws DocumentProcessingException {
         if(documentText != null) {
-            return Arrays.asList(documentText.split("\\W+"));
+            return Arrays.asList(documentText.split("\\W+")).stream().map(String::toLowerCase).collect(Collectors.toList());
         }
         else {
             throw new DocumentProcessingException("Dokument nie może być pusty.");
