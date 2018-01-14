@@ -36,12 +36,12 @@
                         <HBox prefHeight="26.0" prefWidth="266.0">
                            <children>
                               <TextField fx:id="reqElemTextField" prefHeight="25.0" prefWidth="165.0" />
-                              <Button fx:id="addReqElemBtn" mnemonicParsing="false" onMouseClicked="#addReqElemBtnClick" text="Dodaj">
+                              <Button fx:id="addReqElemBtn" disable="true" mnemonicParsing="false" onMouseClicked="#addReqElemBtnClick" text="Dodaj">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
                               </Button>
-                              <Button fx:id="deleteSelectedReqElemBtn" mnemonicParsing="false" text="Usuń">
+                              <Button fx:id="deleteReqElemBtn" disable="true" mnemonicParsing="false" onMouseClicked="#deleteReqElemBtnClick" text="Usuń">
                                  <HBox.margin>
                                     <Insets left="5.0" />
                                  </HBox.margin>
@@ -61,12 +61,20 @@
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0">
                      <children>
-                        <Button fx:id="addDocToCompareBtn" mnemonicParsing="false" prefHeight="25.0" prefWidth="291.0" text="Dodaj dokument">
+                        <HBox prefHeight="26.0" prefWidth="266.0">
+                           <children>
+                              <Button fx:id="addDocToCompareBtn" disable="true" mnemonicParsing="false" onMouseClicked="#addDocToCompareBtnClick" prefHeight="25.0" prefWidth="218.0" text="Dodaj dokument" />
+                              <Button fx:id="deleteDocToCompareBtn" disable="true" mnemonicParsing="false" onMouseClicked="#deleteDocToCompareBtnClick" text="Usuń">
+                                 <HBox.margin>
+                                    <Insets left="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ListView fx:id="docToCompListView" prefHeight="200.0" prefWidth="200.0">
                            <VBox.margin>
-                              <Insets bottom="5.0" />
-                           </VBox.margin>
-                        </Button>
-                        <ListView prefHeight="200.0" prefWidth="200.0" />
+                              <Insets top="5.0" />
+                           </VBox.margin></ListView>
                      </children>
                   </VBox>
                </content>
@@ -74,7 +82,7 @@
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
             </TitledPane>
-            <Button fx:id="analizeDocumentBtn" mnemonicParsing="false" onMouseClicked="#analizeDocumentBtnClick" prefHeight="25.0" prefWidth="301.0" text="Analizuj dokument">
+            <Button fx:id="analizeDocumentBtn" disable="true" mnemonicParsing="false" onMouseClicked="#analizeDocumentBtnClick" prefHeight="25.0" prefWidth="301.0" text="Analizuj dokument">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>

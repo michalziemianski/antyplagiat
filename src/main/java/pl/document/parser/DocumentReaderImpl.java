@@ -30,8 +30,6 @@ public class DocumentReaderImpl implements DocumentReader {
         document.setText(parser.parseDocument(documentFile));
         document.setWords(extractWordsFromDocuments(document.getText()));
 
-        document.getWords().stream().forEach(System.out::print);
-
         return document;
     }
 

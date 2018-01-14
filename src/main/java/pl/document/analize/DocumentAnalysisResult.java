@@ -14,6 +14,7 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class DocumentAnalysisResult {
+    Document document;
     Map<String, Boolean> requiredElementsResult = new HashMap<>();
     Map<Document, Double> documentsComparisonResult = new HashMap<>();
 }

@@ -16,12 +16,10 @@ public class Document {
     private String name;
     private String text;
     private List<String> words;
-    private Map<String, Long> wordHashMap;
 
     public Document() {
         this.name = "";
         this.text = "";
         this.words = new ArrayList<>();
-        this.wordHashMap = new HashMap<>();
     }
 }

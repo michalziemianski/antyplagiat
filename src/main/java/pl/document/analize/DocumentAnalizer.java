@@ -13,9 +13,19 @@ public class DocumentAnalizer {
 
     public DocumentAnalysisResult analizeDocument(DocumentAnalysisRequest request) throws DocumentProcessingException {
         DocumentAnalysisResult result = new DocumentAnalysisResult();
+        result.setDocument(request.getDocument());
         checkRequiredElements(request, result);
-
+        compareDocuments(request, result);
         return result;
+    }
+
+    private void compareDocuments(DocumentAnalysisRequest request, DocumentAnalysisResult result) throws DocumentProcessingException {
+        for(Document toCompare : request.getDocumentsForComparison()) {
+            DocumentComparator comparator = new DocumentComparator();
+            Double comparisonResult = comparator.compareDocuments(request.getDocument(), toCompare);
+
+            result.getDocumentsComparisonResult().putIfAbsent(toCompare, comparisonResult);
+        }
     }
 
     private void checkRequiredElements(DocumentAnalysisRequest request, DocumentAnalysisResult result) throws DocumentProcessingException {
