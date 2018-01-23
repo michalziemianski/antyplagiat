@@ -11,14 +11,19 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Klasa obsługująca wczytywanie dokumentów z pliku
 public class DocumentReaderImpl implements DocumentReader {
+    // Okienko przeszukiwania dysku
     private FileChooser fileChooser = new FileChooser();
 
+    // Konstruktor w którym ustalany jest filtr plików oraz dozwolone rozszerzenia
     public DocumentReaderImpl() {
         fileChooser.getExtensionFilters().add(
                 new FileChooser.ExtensionFilter("Dokument tekstowy", "*.txt", "*.docx"));
     }
 
+    // Wczytanie dokumentu z pliku oraz konstruowanie klasy dokumentu zawierającej nazwę pliku, ciąg znakowy dokumentu
+    // oraz wyodrębnione słowa
     @Override
     public Document readDocument() throws DocumentProcessingException {
         File documentFile = openDocumentFile();
@@ -33,6 +38,7 @@ public class DocumentReaderImpl implements DocumentReader {
         return document;
     }
 
+    // Wyświetlenie okienka wyboru plików
     private File openDocumentFile() throws DocumentProcessingException {
         File documentFile = fileChooser.showOpenDialog(new Stage());
         if(documentFile == null) {
@@ -42,6 +48,7 @@ public class DocumentReaderImpl implements DocumentReader {
         return documentFile;
     }
 
+    // Wybranie sposobu parsowania zależnie od rozszerzenia pliku
     private DocumentParser getParserByExtension(String extension) throws DocumentProcessingException {
         DocumentParser parser;
         switch(extension) {
@@ -58,6 +65,7 @@ public class DocumentReaderImpl implements DocumentReader {
         return parser;
     }
 
+    // Wyłuskanie słow z ciągu tekstowego dokumentu
     private List<String> extractWordsFromDocuments(String documentText) throws DocumentProcessingException {
         if(documentText != null) {
             return Arrays.asList(documentText.split("\\W+")).stream().map(String::toLowerCase).collect(Collectors.toList());

@@ -6,10 +6,14 @@ import pl.search.KappaRabinSearch;
 
 import java.util.*;
 
+// Klasa porównująca pojedyńczy dokument z wzorcem
 public class DocumentComparator {
     private KappaRabinSearch search = new KappaRabinSearch();
+
+    // Progi przeszukiwania - liczba słów szukanych elementów
     private static List<Integer> gateSizes = new ArrayList<>(Arrays.asList(16, 8, 2));
 
+    // Porównanie dokumentów i sumowanie wyniku dla dokumentu
     public Double compareDocuments(Document document, Document toCompare) throws DocumentProcessingException {
         Integer totalResultWeight = 0;
         Double comparisonResult = 0.0;
@@ -22,6 +26,8 @@ public class DocumentComparator {
         return comparisonResult / totalResultWeight;
     }
 
+    // Analiza dla zadanego progu przeszukiwania
+    // Dokument jest przeglądany słowo po słowie, konstruowane są zdania o długości progu i wyszukiwanie w porównywanym dokumencie
     private Double analizeForGateSize(Document document, Document toCompare, Integer gateSize) throws DocumentProcessingException {
         int index = 0;
         Double result = 0.0;
@@ -39,6 +45,7 @@ public class DocumentComparator {
         return result;
     }
 
+    // Sprawdzenie czy w dokumencie występuje dane zdanie, wyznaczana jest liczba wystąpień i obliczany stosunek zdania do liczby słów w dokumencie
     private Double checkSentence(Document document, List<String> sentence) throws DocumentProcessingException {
         Double numberOfOccurrences = Double.valueOf(search.findSentenceOccurence(document.getWords(), sentence));
         if(numberOfOccurrences > 0.0) {

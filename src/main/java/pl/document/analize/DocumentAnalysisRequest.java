@@ -8,6 +8,7 @@ import pl.document.Document;
 
 import java.util.List;
 
+// Zlecenie analizy, zawiera parametry (dokument, wymagane elementy, oraz dokumenty do porównania)
 @Getter
 @Setter
 @AllArgsConstructor

@@ -9,6 +9,7 @@ import pl.document.Document;
 import java.util.HashMap;
 import java.util.Map;
 
+// Wynik analizy - wymagane elementy w formie prawda/fałsz, porównania dokumentów w formie liczby 0 - 1
 @Getter
 @Setter
 @AllArgsConstructor

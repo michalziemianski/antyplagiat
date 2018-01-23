@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Kontroler obsługujący ekran wyników
 public class ResultsController {
     private DocumentAnalysisResult analysisResult;
     private List<String> requiredElementsResults = new ArrayList<>();
@@ -33,12 +34,14 @@ public class ResultsController {
 
     }
 
+    // Zamknięcie okna wyników
     @FXML
     private void onCloseBtnClick(){
         Stage stage = (Stage) closeBtn.getScene().getWindow();
         stage.close();
     }
 
+    // Ustawienie tytułu oraz wyników
     public void setAnalysisResult(DocumentAnalysisResult analysisResult) {
         this.analysisResult = analysisResult;
 
@@ -46,6 +49,8 @@ public class ResultsController {
         setResults(analysisResult);
     }
 
+    // Przetworzenie wyników do czytelnej formy w postaci: element - wynik, przetworzone elementy dodawane są
+    // do list na ekranie wyników
     private void setResults(DocumentAnalysisResult analysisResult) {
         requiredElementsResults = analysisResult.getRequiredElementsResult().entrySet().stream()
                 .map(stringBooleanEntry -> {

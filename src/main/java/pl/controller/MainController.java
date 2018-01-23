@@ -25,13 +25,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+// Kontroller odpowiadający za obsługę głównego ekranu aplikacji
 public class MainController {
     private DocumentReader documentReader = new DocumentReaderImpl();
     private DocumentAnalizer documentAnalizer = new DocumentAnalizer();
 
+    // Dokument do analizy
     private Document document = null;
+
+    // Lista wymaganych elementów
     private List<String> requiredElements = new ArrayList<>();
+
+    // Lista dokumentów do analizy
     private List<Document> documentsToCompare = new ArrayList<>();
+
 
     @FXML
     private TextArea documentTextArea;
@@ -68,6 +75,7 @@ public class MainController {
 
     }
 
+    // Otwieranie dokumentu, ustawienie podglądu dokumentu oraz odblokowanie możliwości ustawiania opcji analizy
     @FXML
     public void openFileButtonClick() {
         try {
@@ -82,6 +90,7 @@ public class MainController {
         }
     }
 
+    // Dodawanie wymaganych elementów, pobierana jest wartość z pola tekstowego i dodawana do listy elementów
     @FXML
     public void addReqElemBtnClick() {
         if(StringUtils.isNotBlank(reqElemTextField.getText())) {
@@ -92,6 +101,7 @@ public class MainController {
         }
     }
 
+    // Usuwanie zaznaczonego wymagannego elemenu
     @FXML
     public void deleteReqElemBtnClick() {
         String selectedItem = (String)reqElemListView.getSelectionModel().getSelectedItem();
@@ -101,6 +111,8 @@ public class MainController {
         }
     }
 
+    // Dodawanie dokumentu do porównania, otwierane jest okienko wyszukiwania pliku, otwarty dokument dodawany jest do
+    // listy dokumentów
     @FXML
     public void addDocToCompareBtnClick() {
         try {
@@ -112,6 +124,7 @@ public class MainController {
         }
     }
 
+    // Usuwanie zaznaczonego dokumentu do porównania
     @FXML
     public void deleteDocToCompareBtnClick() {
         String selectedItem = (String)docToCompListView.getSelectionModel().getSelectedItem();
@@ -126,6 +139,8 @@ public class MainController {
         }
     }
 
+    // Analiza dokumentu, tworzone jest rządanie analizy, które przekazywane jest do klasy analizującej, po
+    // zakończeniu analizy otwierane jest okno z wynikami
     @FXML
     public void analizeDocumentBtnClick() {
         DocumentAnalysisRequest request = new DocumentAnalysisRequest();
@@ -141,6 +156,7 @@ public class MainController {
         }
     }
 
+    // Odświerzenie listy dokumentów
     private void invalidateDocumentsToCompare() {
         docToCompListView.getItems().clear();
         List<String> documentNames = documentsToCompare.stream()
@@ -149,11 +165,13 @@ public class MainController {
         docToCompListView.getItems().addAll(documentNames);
     }
 
+    // Odświerzenie listy wymaganych elementów
     private void invalidateRequiredElements() {
         reqElemListView.getItems().clear();
         reqElemListView.getItems().addAll(requiredElements);
     }
 
+    // Odblokowanie opcji analizy
     private void enableAnalysisControls() {
         addReqElemBtn.setDisable(false);
         deleteReqElemBtn.setDisable(false);
@@ -162,11 +180,13 @@ public class MainController {
         analizeDocumentBtn.setDisable(false);
     }
 
+    // Wyczyszczenie list z elementami oraz dokumentami
     private void clearAnalysisRequest() {
         reqElemListView.getItems().clear();
         docToCompListView.getItems().clear();
     }
 
+    // Otwarcie okna z wynikami i przekazanie wyników analizy do nowego okna
     private void openResultsWindow(DocumentAnalysisResult analysisResult) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/resultsView.fxml"));

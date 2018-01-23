@@ -10,6 +10,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+// Klasa wczytująca dokumenty programu WORD za pomocą biblioteki Apache POI
 public class DocxDocumentParser implements DocumentParser {
     @Override
     public String parseDocument(File documentFile) throws DocumentProcessingException {

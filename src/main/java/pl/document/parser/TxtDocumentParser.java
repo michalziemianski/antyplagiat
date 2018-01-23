@@ -7,6 +7,7 @@ import pl.exception.DocumentProcessingException;
 import java.io.File;
 import java.nio.charset.Charset;
 
+// Klasa wczytująca plik tekstowy (txt)
 public class TxtDocumentParser implements DocumentParser {
     @Override
     public String parseDocument(File documentFile) throws DocumentProcessingException {
