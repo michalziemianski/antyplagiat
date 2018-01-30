@@ -27,7 +27,7 @@ public class DocumentAnalizer {
             DocumentComparator comparator = new DocumentComparator();
             Double comparisonResult = comparator.compareDocuments(request.getDocument(), toCompare);
 
-            result.getDocumentsComparisonResult().putIfAbsent(toCompare, comparisonResult);
+            result.getDocumentsComparisonResult().putIfAbsent(toCompare, Math.min(comparisonResult, 1.0));
         }
     }
 
@@ -50,7 +50,7 @@ public class DocumentAnalizer {
     // Wyłuskanie słów z danego ciągu znaków - dzielenie po znakach specjalnyc
     private List<String> getWordsFromText(String text) throws DocumentProcessingException {
         if(text != null) {
-            return Arrays.asList(text.split("\\W+")).stream().map(String::toLowerCase).collect(Collectors.toList());
+            return Arrays.asList(text.split("[^0-9A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+")).stream().map(String::toLowerCase).collect(Collectors.toList());
         }
         else {
             throw new DocumentProcessingException("Dokument nie może być pusty.");

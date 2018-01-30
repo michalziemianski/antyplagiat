@@ -11,7 +11,7 @@ public class DocumentComparator {
     private KappaRabinSearch search = new KappaRabinSearch();
 
     // Progi przeszukiwania - liczba słów szukanych elementów
-    private static List<Integer> gateSizes = new ArrayList<>(Arrays.asList(16, 8, 2));
+    private static List<Integer> gateSizes = new ArrayList<>(Arrays.asList(2));
 
     // Porównanie dokumentów i sumowanie wyniku dla dokumentu
     public Double compareDocuments(Document document, Document toCompare) throws DocumentProcessingException {
@@ -19,8 +19,10 @@ public class DocumentComparator {
         Double comparisonResult = 0.0;
         for(Integer gateSize : gateSizes) {
             Double resultForGateSize = analizeForGateSize(document, toCompare, gateSize);
-            comparisonResult += resultForGateSize * gateSize;
-            totalResultWeight += gateSize;
+            if(resultForGateSize > 0.0) {
+                comparisonResult += resultForGateSize * gateSize;
+                totalResultWeight += gateSize;
+            }
         }
 
         return comparisonResult / totalResultWeight;
@@ -31,7 +33,7 @@ public class DocumentComparator {
     private Double analizeForGateSize(Document document, Document toCompare, Integer gateSize) throws DocumentProcessingException {
         int index = 0;
         Double result = 0.0;
-        while(index < document.getWords().size()-gateSize) {
+        while(index <= document.getWords().size()-gateSize) {
             List<String> currentSentence = document.getWords().subList(index, index + gateSize);
             Double currentSentenceResult = checkSentence(toCompare, currentSentence);
             if (currentSentenceResult > 0.0) {

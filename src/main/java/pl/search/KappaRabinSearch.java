@@ -15,7 +15,7 @@ public class KappaRabinSearch {
         int occurences = 0;
         Long sentenceHash = hashSentence(searchSentence);
 
-        while(index < document.size()-searchSentence.size()) {
+        while(index <= document.size()-searchSentence.size()) {
             List<String> currentSentence = document.subList(index, index + searchSentence.size());
             Long currentSentenceHash = hashSentence(currentSentence);
             if(sentenceHash.equals(currentSentenceHash)

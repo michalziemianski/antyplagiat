@@ -68,7 +68,7 @@ public class DocumentReaderImpl implements DocumentReader {
     // Wyłuskanie słow z ciągu tekstowego dokumentu
     private List<String> extractWordsFromDocuments(String documentText) throws DocumentProcessingException {
         if(documentText != null) {
-            return Arrays.asList(documentText.split("\\W+")).stream().map(String::toLowerCase).collect(Collectors.toList());
+            return Arrays.asList(documentText.split("[^0-9A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]+")).stream().map(String::toLowerCase).collect(Collectors.toList());
         }
         else {
             throw new DocumentProcessingException("Dokument nie może być pusty.");
